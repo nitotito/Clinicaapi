@@ -188,7 +188,7 @@ if(status != 300 ){
         switch(tipoDeUsuario){
             case "Paciente":
                 console.log("consulta a pacientes");
-                var sql = "SELECT dni,contra FROM  Paciente WHERE DNI = ";
+                var sql = "SELECT dni,contra,nombre FROM  Paciente WHERE DNI = ";
                 sql= sql + usuario.dni;
                 sql=sql + " and contra = ";
                 sql= sql + "'" + usuario.contra + "'";
@@ -196,7 +196,7 @@ if(status != 300 ){
                 break;
             case "medico":
                 console.log("consulta a medicos");
-                var sql = "SELECT dni,contra,habilitacion FROM  Medico WHERE DNI = ";
+                var sql = "SELECT dni,contra,habilitacion,nombre FROM  Medico WHERE DNI = ";
                 sql= sql + usuario.dni;
                 sql=sql + " and contra = ";
                 sql= sql + "'" + usuario.contra + "'";
@@ -204,7 +204,10 @@ if(status != 300 ){
                 break;
             case "admin":
                 console.log("consulta a admin");
-                var sql = "SELECT * FROM Admin";
+                var sql = "SELECT * FROM Admin WHERE DNI =";
+                sql= sql + usuario.dni;
+                sql=sql + " and contra = ";
+                sql= sql + "'" + usuario.contra + "'";
                 console.log("Consulta a realizar : " + sql);
                 break;
         }

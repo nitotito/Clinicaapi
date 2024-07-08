@@ -56,21 +56,21 @@ app.post('/login/', (req, res) => {
 });
 
 
-app.post('/insertar/', (req, res) => {  // registros de usuarios 
+app.post('/insertar/', (req, res) => {   
     
     var usuario = req.body;
     aplicacion.insertar(usuario, res);
     
 });
 
-app.post('/insertarMed/', (req, res) => {  // registros de usuarios 
+app.post('/insertarMed/', (req, res) => {   
     
     var usuario = req.body;
     aplicacion.insertarMed(usuario, res);
     
 });
 
-app.post('/insertarAdmin/', (req, res) => {  // registros de usuarios 
+app.post('/insertarAdmin/', (req, res) => {  
     
     var usuario = req.body;
     aplicacion.insertarAdmin(usuario, res);
@@ -78,9 +78,9 @@ app.post('/insertarAdmin/', (req, res) => {  // registros de usuarios
 });
 
 /* app.post('/loguear/', (req, res) => {  /// log de usuario 
-    
-    var login = req.body;
-    aplicacion.loguear(login, res); //paso la misma variable 
+
+var login = req.body;
+aplicacion.loguear(login, res); //paso la misma variable 
     
 }); */
 
