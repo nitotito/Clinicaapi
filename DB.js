@@ -108,7 +108,7 @@ conexion.query(query, [dni], (err, results) => {
       }
       
       if (results.length > 0) {
-       status = 401;
+       status = 400;
         console.log(`Usuario existente. Dni encontrado en bd`);
 
         retornar(status);
@@ -116,7 +116,7 @@ conexion.query(query, [dni], (err, results) => {
       }
 //hast aca
 if(status != 400 /* || status !=500 */){
-    var sql = "insert into Medico (dni,nombre,apellido,email,telefono,contra,especialidad,matricula)";
+    var sql = "insert into Medico (dni,nombre,apellido,email,telefono,contra,especialidad,matricula,habilitacion)";
     sql= sql + " values ('" + usuario.dni + "',";
     sql= sql + "'" + usuario.nombre + "',";
     sql= sql + "'" + usuario.apellido + "',";
@@ -124,8 +124,8 @@ if(status != 400 /* || status !=500 */){
     sql= sql + "'" + usuario.telefono + "',";
     sql= sql + "'" + usuario.contra+ "',";
     sql= sql + "'" + usuario.especialidad + "',";
-    sql= sql + "'" + usuario.matricula + "')";
-         
+    sql= sql + "'" + usuario.matricula + "',";
+    sql= sql + "'" + "false" + "')";     
 
     conexion.query(sql,
      function(err, resultado, filas){
@@ -162,12 +162,12 @@ exports.insertarPersonaAdmin = function(usuario, retornar){
       }
 
 if(status != 300 ){
-    var sql = "insert into Admin (nombre,apellido,email,contra)";
+    var sql = "insert into Admin (nombre,apellido,email,contra,dni)";
     sql= sql + " values ('" + usuario.nombre + "',";
     sql= sql + "'" + usuario.apellido + "',";
     sql= sql + "'" + usuario.email + "',";
-    sql= sql + "'" + usuario.contra + "')";
- 
+    sql= sql + "'" + usuario.contra + "',";
+    sql= sql + "'" + usuario.dni + "')";
 
     conexion.query(sql,
      function(err, resultado, filas){
@@ -196,7 +196,7 @@ if(status != 300 ){
                 break;
             case "medico":
                 console.log("consulta a medicos");
-                var sql = "SELECT dni,contra FROM  Medico WHERE DNI = ";
+                var sql = "SELECT dni,contra,habilitacion FROM  Medico WHERE DNI = ";
                 sql= sql + usuario.dni;
                 sql=sql + " and contra = ";
                 sql= sql + "'" + usuario.contra + "'";
@@ -204,6 +204,8 @@ if(status != 300 ){
                 break;
             case "admin":
                 console.log("consulta a admin");
+                var sql = "SELECT * FROM Admin";
+                console.log("Consulta a realizar : " + sql);
                 break;
         }
         
@@ -219,3 +221,39 @@ if(status != 300 ){
     
 }
 
+exports.getMedico = function(usuario, retornar){
+    conectar();
+    const query = 'SELECT * FROM Medico';
+console.log("query armada : " + query);
+    conexion.query(query,
+     function(err, resultado, filas){
+        if(err) throw err;
+        console.log(resultado);
+        
+        retornar(resultado);
+
+        });
+}
+
+
+exports.updatedMedicoState = function(usuario, retorno){
+    conectar();
+console.log("update Medicos");
+
+    var queryTo;
+    if(usuario.habilitacion == "false"){
+        queryTo = "UPDATE Medico set habilitacion = 'true' WHERE dni = " + usuario.dni;
+    }else if(usuario.habilitacion == "true"){
+        queryTo = "UPDATE Medico set habilitacion = 'false' WHERE dni = " + usuario.dni;
+    }
+
+    conexion.query(queryTo,
+        function(err, resultado, filas){
+           if(err) throw err;
+           console.log(resultado);
+           
+           retorno(resultado);
+   
+           });
+
+}

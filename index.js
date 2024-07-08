@@ -12,6 +12,28 @@ app.get('/prueba/', (req, res) => {
     
 });
 
+app.get('/medicos/', (req, res) => {
+    var usuario = req.body;
+    aplicacion.getMedico(usuario,res);
+    
+});
+
+app.put('/medicos/', (req, res) => {
+    var usuario = req.body;
+
+    aplicacion.updatedMedico(usuario,res)
+  
+    // Encuentra el médico a actualizar
+/*     let medico = medicos.find(m => m.dni == dni);
+    if (medico) {
+      // Actualiza los datos del médico
+      Object.assign(medico, updatedMedico);
+      res.json(medico);
+    } else {
+      res.status(404).json({ message: 'Médico no encontrado' });
+    } */
+  });
+
 app.post('/login/', (req, res) => {
     
     var usuario = req.body;

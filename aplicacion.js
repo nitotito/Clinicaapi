@@ -25,6 +25,17 @@ exports.loguear = function (login, res) {
 
 }
 
+exports.getMedico = function (login, res) {
+
+    db.getMedico(login, datos => { res.json(datos)});
+
+}
+
+exports.updatedMedico = function(usuario, res) {
+
+    db.updatedMedicoState(usuario, datos => { res.json(datos)});
+}
+
 
 /* function crearJson(usuario){
    var salida= {data: usuario,
