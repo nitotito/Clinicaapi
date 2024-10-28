@@ -143,3 +143,24 @@ exports.updatePaciente = function(req, res) {
     });
 };
 
+exports.updateMedico = function(req, res) {
+    db.putUpdateMedico(req, ( datos) => {
+        console.log("ojo lean", res);
+        res(datos);  
+    });
+};
+
+exports.historialTurnosMed = function(req, res) {
+    console.log("desde controladorrrrrr : " , req);
+    db.getHistorialTurnosMed(req, (datos) => {
+    res.json( datos );
+    });
+};
+
+
+exports.updateObservaciones = function(req, res) {
+    db.putObservaciones(req, ( datos) => {
+        res(datos);  
+    });
+}; 
+

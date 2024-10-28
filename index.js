@@ -182,7 +182,28 @@ app.get('/pacienteId/:id', (req, res) => {
     });
  });
 
+ app.put('/medicos/:id', (req, res) => {
 
+    aplicacion.updateMedico(req,(error,resultado)=>{
+        res.json({ message: 'Disponibilidad guardada exitosamente', resultado });
+    });
+ });
+
+ app.get('/historialTurnosMed/:id_medico', (req, res) => { 
+    const pac = req.params.id_medico; 
+    console.log("id_medico", pac);
+
+    aplicacion.historialTurnosMed({ id_medico: pac}, res);
+});
+
+app.put('/updateObservaciones/:id', (req, res) => {
+    const id = req.params.id;
+    const turno = req.body;
+    console.log("dkajfsdf",turno);
+    aplicacion.updateObservaciones(req,(error,resultado)=>{
+        res.json({ message: 'turno actualizado', resultado });
+    });
+ });
 
  //-----------Listen------------------
 

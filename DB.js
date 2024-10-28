@@ -232,7 +232,7 @@ exports.postGuardarTurno = function (req, res) {
     }
 
     const observaciones = "no aplica";
-    const estado = "confirmado";
+    const estado = "a confirmar";
     const calificacion = "a confirmar";
 
     // Modifica 'dia' a 'fecha' para que coincida con la estructura de tu base de datos
@@ -443,5 +443,42 @@ exports.putUdatePaciente = function ( req , res ){
         }
         return res( resultado);
     });
+
+}
+
+exports.putUpdateMedico = function ( req , res ){
+    console.log("id type : ", req.body);
+    console.log("askjdfkjaksjdf",req.params);
+    const {id}= req.params;
+    const{nombre,apellido,email,telefono,contra,dni,especialidad,matricula,habilitacion,avatar} = req.body;
+    const query = `
+        UPDATE Medico 
+        SET nombre = ?, apellido = ?, email = ?, telefono = ?, contra = ?, dni = ?, especialidad = ?,matricula = ?,habilitacion = ?, avatar = ?
+        WHERE id = ?`;
+    
+    pool.query(query,[nombre,apellido,email,telefono,contra,dni,especialidad,matricula,habilitacion,avatar,id], function(err, resultado) {
+        console.log("despues de la query:", resultado);
+        if (err) {
+            console.info('Error al obtener turnos:', err);
+            return res(err);
+        }
+        return res( resultado);
+    });
+
+}
+
+exports.getHistorialTurnosMed = function (req, retornar) {
+    const { id_medico} = req;
+
+    console.log("id edico: ", id_medico)
+        const query = `SELECT * FROM Turno WHERE id_medico = ?`;
+        pool.query(query,[id_medico], function(err, resultado) {
+            if (err) {
+                console.error('Error al obtener turnos:', err);
+                return retornar(null);
+            }
+            console.log("Turnos obtenidos:", resultado);
+            retornar(resultado);
+        });
 
 }
