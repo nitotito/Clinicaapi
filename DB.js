@@ -135,7 +135,7 @@ exports.loginUsuario = function(usuario, retornar) {
             sql = "SELECT id, dni, contra, nombre FROM Paciente WHERE DNI = ? AND contra = ?";
             break;
         case "medico":
-            sql = "SELECT dni, contra, habilitacion, nombre FROM Medico WHERE DNI = ? AND contra = ?";
+            sql = "SELECT id , dni, contra, habilitacion, nombre FROM Medico WHERE DNI = ? AND contra = ?";
             break;
         case "admin":
             sql = "SELECT * FROM Admin WHERE DNI = ? AND contra = ?";
@@ -359,6 +359,7 @@ exports.getBuscarMedicoId = function ( req , res ){
             console.error('Error al obtener turnos:', err);
             return res(null);
         }
+        console.log("resultado : " , resultado);
         res(resultado);
     });
 
@@ -402,6 +403,45 @@ exports.putUpdateTurno = function ( req , res ){
             return res(null);
         }
         res(resultado);
+    });
+
+}
+
+exports.getPacienteId = function ( req , res ){
+    const {id}= req;
+    const query = `SELECT * FROM Paciente WHERE id = ? `;
+    
+    console.log("id type : ", id);
+    console.log("id type : ", typeof(id));
+    pool.query(query,[id], function(err, resultado) {
+        console.log("despues de la query:", resultado);
+        if (err) {
+            console.error('Error al obtener turnos:', err);
+            return res(null);
+        }
+        res(resultado[0]);
+    });
+
+}
+
+exports.putUdatePaciente = function ( req , res ){
+    console.log("id type : ", req.body);
+    console.log("askjdfkjaksjdf",req.params);
+    const {id}= req.params;
+    const{nombre,apellido,email,telefono,contra,dni,credencial,avatar} = req.body;
+    const query = `
+        UPDATE Paciente 
+        SET nombre = ?, apellido = ?, email = ?, telefono = ?, contra = ?, dni = ?, credencial = ?, avatar = ?
+        WHERE id = ?
+    `;
+    
+    pool.query(query,[nombre,apellido,email,telefono,contra,dni,credencial,avatar,id], function(err, resultado) {
+        console.log("despues de la query:", resultado);
+        if (err) {
+            console.info('Error al obtener turnos:', err);
+            return res(err);
+        }
+        return res( resultado);
     });
 
 }

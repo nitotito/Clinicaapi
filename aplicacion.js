@@ -39,7 +39,7 @@ exports.updatedMedico = function(usuario, res) {
 exports.DisponibilidadporEspecialidad = function (usuario, res) {
     db.getDisponibilidadporEspecialidad(usuario, datos => {
         if (datos) {
-            res.json(datos);  // Enviar los datos de vuelta al cliente
+            res.json(datos);  
         } else {
             res.status(404).json({ error: "Disponibilidad no encontrada" });
         }
@@ -59,7 +59,7 @@ exports.getTurnosMedicos = function (usuario, res) {
 }
 
 exports.guardarTurno = function(turno, res) {
-    // Llama a la función para guardar el turno en la base de datos
+    
     db.postGuardarTurno(turno, (datos) => {
         res.json(datos);
     });
@@ -105,34 +105,41 @@ exports.medicosById = function (usuario, res) {
 }
 
 exports.postGuardarDisponibilidad = function(disponibilidad, callback) {
-    // Llama a la función de la base de datos para guardar la disponibilidad
+    
     db.postGuardarDisponibilidad(disponibilidad, (error, datos) => {
         if (error) {
-            return callback(error);  // Llamar callback con error si ocurre
+            return callback(error);  
         }
-        callback(null, datos);  // Llamar callback con los datos si todo fue exitoso
+        callback(null, datos);  
     });
 };
 
 exports.updateTurno = function(req, res) {
-    // Llama a la función de la base de datos para guardar la disponibilidad
+    
     db.putUpdateTurno(req, (error, datos) => {
         if (error) {
-            return res(error);  // Llamar callback con error si ocurre
+            return res(error);  
         }
-        res(null, datos);  // Llamar callback con los datos si todo fue exitoso
+        res(null, datos);  
     });
 };
 
-/* function crearJson(usuario){
-   var salida= {data: usuario,
-    token :jwt.sign({
-        
-        data:usuario,
-        exp: Math.floor(Date.now() / 1000) + (60 * 60),
-        
-    },"superclave")}
-    return salida;
-    
+exports.pacienteById = function(req, res) {
+    db.getPacienteId(req, ( datos) => {
+        res.json(datos);  
+    });
+};
 
-} */
+exports.pacienteById = function(req, res) {
+    db.getPacienteId(req, ( datos) => {
+        res.json(datos);  
+    });
+};
+
+exports.updatePaciente = function(req, res) {
+    db.putUdatePaciente(req, ( datos) => {
+        console.log("ojo lean", res);
+        res(datos);  
+    });
+};
+

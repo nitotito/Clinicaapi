@@ -158,28 +158,33 @@ app.put('/updateTurno', (req, res) => {
         res.json({ message: 'Disponibilidad guardada exitosamente', resultado });
     });
 });
-/* app.post('/loguear/', (req, res) => {  /// log de usuario 
 
-var login = req.body;
-aplicacion.loguear(login, res); //paso la misma variable 
+app.get('/pacienteId/:id', (req, res) => {  
+    var pac=req.params.id;
     
-}); */
+     aplicacion.pacienteById({id:pac},res);
+    
+ });
 
-/* app.post('/probar/', (req, res) => {
+ app.put('/updateTurno', (req, res) => {
+    var updateTurno = req.query;
+    console.log("Datos que vienen del cliente: ", updateTurno);
     
-    
-    var token=req.headers.authorization;
-    
-    if ((!token) || token.indexOf("Bearer ") == -1) res.sendStatus(401);
-    try {
-        var usuario= jwt.verify(token.replace("Bearer ", ""), "superclave");
-        res.json(JSON.stringify( usuario));
-    } catch (error) {
-         res.sendStatus(401);
-    }
-    
-}); */
+    aplicacion.updateTurno(updateTurno, (error, resultado) => {
+        res.json({ message: 'Disponibilidad guardada exitosamente', resultado });
+    });
+ });
 
+ app.put('/usuarios/:id', (req, res) => {
+
+    aplicacion.updatePaciente(req,(error,resultado)=>{
+        res.json({ message: 'Disponibilidad guardada exitosamente', resultado });
+    });
+ });
+
+
+
+ //-----------Listen------------------
 
 app.listen( process.env.PORT || 3000, () => {
     console.log('escuchando el puerto');
