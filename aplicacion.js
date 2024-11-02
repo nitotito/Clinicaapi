@@ -158,8 +158,9 @@ exports.historialTurnosMed = function(req, res) {
 };
 
 
-exports.updateObservaciones = function(req, res) {
-    db.putObservaciones(req, ( datos) => {
+exports.updateObservaciones = function(id,turno, res) {
+    db.putObservaciones(id, turno, ( datos) => {
+        console.log("datos",datos)
         res(datos);  
     });
 }; 

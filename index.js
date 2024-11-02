@@ -199,8 +199,7 @@ app.get('/pacienteId/:id', (req, res) => {
 app.put('/updateObservaciones/:id', (req, res) => {
     const id = req.params.id;
     const turno = req.body;
-    console.log("dkajfsdf",turno);
-    aplicacion.updateObservaciones(req,(error,resultado)=>{
+    aplicacion.updateObservaciones(id,turno,(error,resultado)=>{
         res.json({ message: 'turno actualizado', resultado });
     });
  });

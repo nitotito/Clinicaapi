@@ -482,3 +482,20 @@ exports.getHistorialTurnosMed = function (req, retornar) {
         });
 
 }
+
+exports.putObservaciones = function (id, turno, retornar) {
+const {observaciones} = turno;
+
+    console.log("id turno: ", id);
+    console.log("turno:", observaciones);
+        const query = `UPDATE Turno SET observaciones = ? WHERE id = ?`;
+        pool.query(query,[observaciones,id], function(err, resultado) {
+            if (err) {
+                console.error('Error al obtener turnos:', err);
+                return retornar(null);
+            }
+            console.log("Turnos obtenidos:", resultado);
+            retornar(resultado);
+        });
+
+}
